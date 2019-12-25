@@ -12,7 +12,9 @@ class AndResGuardExtension {
   boolean use7zip
   boolean useSign
   String metaName
+  String fixedResName
   boolean keepRoot
+  boolean mergeDuplicatedRes
   Iterable<String> whiteList
   Iterable<String> compressFilePattern
   String finalApkBackupPath
@@ -25,7 +27,9 @@ class AndResGuardExtension {
     use7zip = false
     useSign = false
     metaName = "META-INF"
+    fixedResName = null
     keepRoot = false
+    mergeDuplicatedRes = false
     whiteList = []
     compressFilePattern = []
     mappingFile = null
@@ -56,8 +60,16 @@ class AndResGuardExtension {
     return metaName
   }
 
+  String getFixedResName() {
+    return fixedResName
+  }
+
   boolean getKeepRoot() {
     return keepRoot
+  }
+
+  boolean getMergeDuplicatedRes() {
+    return mergeDuplicatedRes
   }
 
   Iterable<String> getWhiteList() {
@@ -89,7 +101,9 @@ class AndResGuardExtension {
     """| use7zip = ${use7zip}
            | useSign = ${useSign}
            | metaName = ${metaName}
+           | fixedResName = ${fixedResName}
            | keepRoot = ${keepRoot}
+           | mergeDuplicatedRes = ${mergeDuplicatedRes}
            | whiteList = ${whiteList}
            | compressFilePattern = ${compressFilePattern}
            | finalApkBackupPath = ${finalApkBackupPath}

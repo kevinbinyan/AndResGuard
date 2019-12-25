@@ -8,8 +8,10 @@ public class InputParam {
   public final File mappingFile;
   public final boolean use7zip;
   public final boolean keepRoot;
+  public final boolean mergeDuplicatedRes;
   public final boolean useSign;
   public final String metaName;
+  public final String fixedResName;
   public final ArrayList<String> whiteList;
   public final ArrayList<String> compressFilePattern;
   public final String apkPath;
@@ -30,6 +32,7 @@ public class InputParam {
       boolean use7zip,
       boolean useSign,
       boolean keepRoot,
+      boolean mergeDuplicatedRes,
       ArrayList<String> whiteList,
       ArrayList<String> compressFilePattern,
       String apkPath,
@@ -39,6 +42,7 @@ public class InputParam {
       String storealias,
       String storepass,
       String metaName,
+      String fixedResName,
       String zipAlignPath,
       String sevenZipPath,
       SignatureType signatureType,
@@ -50,6 +54,7 @@ public class InputParam {
     this.use7zip = use7zip;
     this.useSign = useSign;
     this.keepRoot = keepRoot;
+    this.mergeDuplicatedRes = mergeDuplicatedRes;
     this.whiteList = whiteList;
     this.compressFilePattern = compressFilePattern;
     this.apkPath = apkPath;
@@ -59,6 +64,7 @@ public class InputParam {
     this.storealias = storealias;
     this.storepass = storepass;
     this.metaName = metaName;
+    this.fixedResName = fixedResName;
     this.zipAlignPath = zipAlignPath;
     this.sevenZipPath = sevenZipPath;
     this.signatureType = signatureType;
@@ -76,6 +82,7 @@ public class InputParam {
     private boolean use7zip;
     private boolean useSign;
     private boolean keepRoot;
+    private boolean mergeDuplicatedRes;
     private ArrayList<String> whiteList;
     private ArrayList<String> compressFilePattern;
     private String apkPath;
@@ -85,6 +92,7 @@ public class InputParam {
     private String storealias;
     private String storepass;
     private String metaName;
+    private String fixedResName;
     private String zipAlignPath;
     private String sevenZipPath;
     private SignatureType signatureType;
@@ -115,6 +123,11 @@ public class InputParam {
 
     public Builder setKeepRoot(boolean keepRoot) {
       this.keepRoot = keepRoot;
+      return this;
+    }
+
+    public Builder setMergeDuplicatedRes(boolean mergeDuplicatedRes) {
+      this.mergeDuplicatedRes = mergeDuplicatedRes;
       return this;
     }
 
@@ -166,6 +179,11 @@ public class InputParam {
       return this;
     }
 
+    public Builder setFixedResName(String fixedResName) {
+      this.fixedResName = fixedResName;
+      return this;
+    }
+
     public Builder setZipAlign(String zipAlignPath) {
       this.zipAlignPath = zipAlignPath;
       return this;
@@ -206,6 +224,7 @@ public class InputParam {
           use7zip,
           useSign,
           keepRoot,
+          mergeDuplicatedRes,
           whiteList,
           compressFilePattern,
           apkPath,
@@ -215,6 +234,7 @@ public class InputParam {
           storealias,
           storepass,
           metaName,
+          fixedResName,
           zipAlignPath,
           sevenZipPath,
           signatureType,

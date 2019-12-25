@@ -22,6 +22,7 @@ andResGuard {
   use7zip = true
   useSign = true
   keepRoot = false
+  mergeDuplicatedRes = true
   // add <yourpackagename>.R.drawable.icon into whitelist.
   // because the launcher will get the icon with his name
   whiteList = ["R.mipmap.ic_launcher",
@@ -59,7 +60,7 @@ crashlytics {
 
 android {
   compileSdkVersion 26
-  buildToolsVersion "28.0.1"
+  buildToolsVersion "28.0.3"
 
 
   signingConfigs {
@@ -80,7 +81,7 @@ android {
     }
   }
 
-  flavorDimensions "default"
+  flavorDimensions "default", "color"
   productFlavors {
     flavor2 {
       dimension "default"
@@ -98,6 +99,16 @@ android {
       dimension "default"
       println("@@@THIS IS aaa@@@")
       applicationId 'andresguard.tencent.com.andresguard_example.aaa'
+    }
+
+    red {
+      dimension "color"
+      println("@@@THIS IS red@@@")
+    }
+
+    blue {
+      dimension "color"
+      println("@@@THIS IS blue@@@")
     }
   }
 

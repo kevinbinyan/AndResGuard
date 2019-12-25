@@ -1,10 +1,11 @@
 package com.tencent.mm.androlib;
 
-import apksigner.ApkSignerTool;
+import com.tencent.mm.androlib.res.decoder.ARSCDecoder;
 import com.tencent.mm.resourceproguard.Configuration;
 import com.tencent.mm.util.FileOperation;
 import com.tencent.mm.util.TypedValue;
 import com.tencent.mm.util.Utils;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -13,6 +14,8 @@ import java.security.KeyStore;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import apksigner.ApkSignerTool;
 
 /**
  * @author shwenzhang
@@ -227,7 +230,6 @@ public class ResourceApkBuilder {
         signedApk.getAbsolutePath(),
         unSignedApk.getAbsolutePath()
     };
-    dumpParams(params);
     ApkSignerTool.main(params);
   }
 
@@ -255,16 +257,7 @@ public class ResourceApkBuilder {
         unSignedApk.getAbsolutePath(),
         config.mStoreAlias
     };
-    //dumpParams(argv);
     Utils.runExec(argv);
-  }
-
-  private void dumpParams(String[] params) {
-    StringBuilder sb = new StringBuilder();
-    for (String param : params) {
-      sb.append(param).append(" ");
-    }
-    System.out.println(sb.toString());
   }
 
   private void alignApks() throws IOException, InterruptedException {
@@ -335,7 +328,7 @@ public class ResourceApkBuilder {
         FileOperation.getlist(destResDir),
         FileOperation.getlist(rawResDir)
     );
-    if (FileOperation.getlist(destResDir) != FileOperation.getlist(rawResDir)) {
+    if (FileOperation.getlist(destResDir) != (FileOperation.getlist(rawResDir) - ARSCDecoder.mMergeDuplicatedResCount)) {
       throw new IOException(String.format(
           "the file count of %s, and the file count of %s is not equal, there must be some problem\n",
           rawResDir.getAbsolutePath(),

@@ -32,7 +32,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.tencent.mm:AndResGuard-gradle-plugin:1.2.15'
+        classpath 'com.tencent.mm:AndResGuard-gradle-plugin:1.2.17'
     }
 }
 
@@ -41,9 +41,13 @@ andResGuard {
     mappingFile = null
     use7zip = true
     useSign = true
-    // it will keep the origin path of your resources when it's true
+    // It will keep the origin path of your resources when it's true
     keepRoot = false
-
+    // If set, name column in arsc those need to proguard will be kept to this value
+    fixedResName = "arg"
+    // It will merge the duplicated resources, but don't rely on this feature too much.
+    // it's always better to remove duplicated resource from repo
+    mergeDuplicatedRes = true
     whiteList = [
         // your icon
         "R.drawable.icon",
@@ -65,7 +69,7 @@ andResGuard {
         "*.gif",
     ]
     sevenzip {
-        artifact = 'com.tencent.mm:SevenZip:1.2.15'
+        artifact = 'com.tencent.mm:SevenZip:1.2.17'
         //path = "/usr/local/bin/7za"
     }
 
@@ -127,7 +131,7 @@ If finalApkBackupPath is null, AndResGuard will overwrite final APK to the path 
 1. The first element of list which returned by `AssetManager#list(String path)` is empty string when you're using the APK which is compressed by 7zip. [#162](https://github.com/shwenzhang/AndResGuard/issues/162)
 
 ## Best Practise
-1. Do **NOT** add `resource.asrc` into `compressFilePattern` unless the app size is really matter to you.([#84](https://github.com/shwenzhang/AndResGuard/issues/84) [#233](https://github.com/shwenzhang/AndResGuard/issues/233))
+1. Do **NOT** add `resources.arsc` into `compressFilePattern` unless the app size is really matter to you.([#84](https://github.com/shwenzhang/AndResGuard/issues/84) [#233](https://github.com/shwenzhang/AndResGuard/issues/233))
 2. Do **NOT** enable 7zip compression(`use7zip`) when you distribute your APP on Google Play. It'll prevent the file-by-file patch when updating your APP. ([#233](https://github.com/shwenzhang/AndResGuard/issues/233))
 
 

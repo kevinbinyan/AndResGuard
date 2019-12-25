@@ -24,6 +24,7 @@ andResGuard {
   use7zip = true
   useSign = true
   keepRoot = false
+  mergeDuplicatedRes = true
   // add <yourpackagename>.R.drawable.icon into whitelist.
   // because the launcher will get the icon with his name
   whiteList = ["R.mipmap.ic_launcher",
@@ -55,7 +56,7 @@ crashlytics {
 
 android {
   compileSdkVersion 26
-  buildToolsVersion '28.0.1'
+  buildToolsVersion '28.0.3'
 
 
   signingConfigs {

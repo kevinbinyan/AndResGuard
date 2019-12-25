@@ -36,14 +36,26 @@ class AndResGuardTask extends DefaultTask {
         if (variantName.equalsIgnoreCase(variant.buildType.name as String) || isTargetFlavor(variantName,
             variant.productFlavors, variant.buildType.name) ||
             variantName.equalsIgnoreCase(AndResGuardPlugin.USE_APK_TASK_NAME)) {
-          buildConfigs << new BuildInfo(output.outputFile,
+
+          def outputFile = null
+          try {
+            if (variant.metaClass.respondsTo(variant, "getPackageApplicationProvider")) {
+              outputFile = new File(variant.packageApplicationProvider.get().outputDirectory, output.outputFileName)
+            }
+          } catch (Exception ignore) {
+            // no-op
+          } finally {
+            outputFile = outputFile ?: output.outputFile
+          }
+
+          buildConfigs << new BuildInfo(
+              outputFile,
               variant.variantData.variantConfiguration.signingConfig,
               variant.variantData.variantConfiguration.applicationId,
               variant.buildType.name,
               variant.productFlavors,
               variantName,
               variant.mergedFlavor.minSdkVersion.apiLevel)
-
         }
       }
     }
@@ -55,7 +67,7 @@ class AndResGuardTask extends DefaultTask {
   static isTargetFlavor(variantName, flavors, buildType) {
     if (flavors.size() > 0) {
       String flavor = flavors.get(0).name
-      return variantName.equalsIgnoreCase(flavor) || variantName.equalsIgnoreCase([flavor, buildType].join(""))
+      return variantName.equalsIgnoreCase(flavor) || variantName.equalsIgnoreCase([flavors.collect {it.name}.join(""), buildType].join(""))
     }
     return false
   }
@@ -122,7 +134,9 @@ class AndResGuardTask extends DefaultTask {
         .setWhiteList(whiteListFullName)
         .setUse7zip(configuration.use7zip)
         .setMetaName(configuration.metaName)
+        .setFixedResName(configuration.fixedResName)
         .setKeepRoot(configuration.keepRoot)
+        .setMergeDuplicatedRes(configuration.mergeDuplicatedRes)
         .setCompressFilePattern(configuration.compressFilePattern)
         .setZipAlign(getZipAlignPath())
         .setSevenZipPath(sevenzip.path)
